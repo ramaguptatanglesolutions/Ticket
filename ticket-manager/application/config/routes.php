@@ -33,3 +33,4 @@ $route['agents/delete']='Agent_Controller/delete';
 $route['departments/new'] = 'Department_Controller/create';
 $route['departments/search'] = 'Department_Controller/search';
 $route['department/delete'] = 'Department_Controller/delete';
+$route['department/block']='Department_Controller/block';

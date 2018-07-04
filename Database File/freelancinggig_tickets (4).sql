@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2018 at 11:28 AM
+-- Generation Time: Jul 04, 2018 at 03:05 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -38,14 +38,18 @@ CREATE TABLE IF NOT EXISTS `address` (
   `zip_code` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `address_ibfk_1` (`agent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=71 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
 --
 -- Dumping data for table `address`
 --
 
 INSERT INTO `address` (`id`, `agent`, `type`, `address_line_1`, `address_line_2`, `city`, `state`, `country`, `zip_code`) VALUES
-(66, 'sukant@gmail.com', 1, 'zvxjgs', 'bvmbmbb', 'alld', 'uttarpradesh', 'india', 22432);
+(66, 'sukant@gmail.com', 1, 'zvxjgs', 'bvmbmbb', 'alld', 'uttarpradesh', 'india', 22432),
+(71, 'eius@gmail.com', 1, 'libero', 'quisquam', 'consequuntur', 'cum', 'nulla', 0),
+(72, 'eius@gmail.com', 2, 'aliquam', 'aut', 'mollitia', 'dolorem', 'molestias', 0),
+(73, 'sed@gmail.com', 1, 'rerum', 'aut', 'porro', 'excepturi', 'est', 0),
+(74, 'sed@gmail.com', 2, 'veniam', 'qui', 'quibusdam', 'accusamus', 'in', 0);
 
 -- --------------------------------------------------------
 
@@ -64,14 +68,16 @@ CREATE TABLE IF NOT EXISTS `agent` (
   `rating` int(11) NOT NULL,
   PRIMARY KEY (`agent_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `agent`
 --
 
 INSERT INTO `agent` (`agent_id`, `id`, `password`, `last_login`, `role`, `department`, `status`, `rating`) VALUES
-(12, 'sukant@gmail.com', 'password', 0, 1, 5, 0, 0);
+(12, 'sukant@gmail.com', 'password', 0, 1, 5, 0, 0),
+(16, 'eius@gmail.com', 'password', 0, 2, 4, 0, 0),
+(17, 'sed@gmail.com', 'password', 0, 2, 4, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -96,6 +102,8 @@ CREATE TABLE IF NOT EXISTS `contact` (
 --
 
 INSERT INTO `contact` (`id`, `country_code`, `area_code`, `telephone_no`, `mobile_no`, `extension`, `personal_email_id`, `official_email_id`) VALUES
+('eius@gmail.com', 0, 0, 0, 0, 0, 'Gavin_Skiles@gmail.com', 'Marilyne.Williamson59@gmail.com'),
+('sed@gmail.com', 0, 0, 0, 0, 0, 'Rosa_Dickinson10@yahoo.com', 'Boris.Quitzon@hotmail.com'),
 ('sukant@gmail.com', 123, 123, 123456, 890789099, 767678, 'ab@ex.com', 'ab@ex.com');
 
 -- --------------------------------------------------------
@@ -109,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `department` (
   `name` varchar(255) NOT NULL,
   `status` int(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `department`
@@ -118,13 +126,7 @@ CREATE TABLE IF NOT EXISTS `department` (
 INSERT INTO `department` (`id`, `name`, `status`) VALUES
 (4, 'Sales Department', 0),
 (5, 'Technical Department', 0),
-(6, 'Marketing Department', 0),
-(13, 'Finance Department', 0),
-(14, 'fthyuhtuj ', 0),
-(17, 'fthyuhtuj ', 0),
-(18, 'fthyuhtuj ', 0),
-(19, 'new Department', 0),
-(20, 'SD', 0);
+(33, 'new Department', 0);
 
 -- --------------------------------------------------------
 
@@ -147,6 +149,8 @@ CREATE TABLE IF NOT EXISTS `personal_info` (
 --
 
 INSERT INTO `personal_info` (`id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `date_of_joining`) VALUES
+('eius@gmail.com', 'dignissimos', 'dicta', 1, '2183-12-05', '2291-03-01'),
+('sed@gmail.com', 'ut', 'eaque', 1, '2921-01-02', '2279-10-07'),
 ('sukant@gmail.com', 'sukant', 'tiwari', 1, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------

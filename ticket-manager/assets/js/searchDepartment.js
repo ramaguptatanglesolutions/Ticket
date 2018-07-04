@@ -12,7 +12,7 @@ $.ajax({
 			{"<>":"button","onclick":function(e){$("#add_department").trigger("click");},"class":"btn btn-primary","value":"New Department","html":"New Department"},
 			  {"<>":"button","type":"button","onclick":function(){return deleteDepartment();},"class":"btn btn-danger","html":"Delete"},
 
-			{"<>":"button","type":"button","class":"btn btn-danger","html":"Block"},
+			{"<>":"button","type":"button","onclick":function(){return blockDepartment();},"class":"btn btn-danger","html":"Block"},
 
 			{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
 			
@@ -52,21 +52,90 @@ $.ajax({
 	
 	});
 });
+
+/*===========================================================================================================================================*/
+
+
 function deleteDepartment(){
 	 var checked = [];
 	    $(":checkbox").map(function() {
 	        this.checked ? checked.push(this.id) : '';
 	    });
-	    alert("checked: " + checked);
+	    //alert("checked: " + checked);
+	    
+	    if(checked!='')
+	    	{
+	    	
+	    	console.log("inside checked");
 	    $.ajax({
 	      url:base_url+"department/delete", 
 	      type:"POST",
 	      data:{data:checked},
 	    	success: function(result){
-	    		console.log(result);
+	    		if(result!=''){
+	    			$('#department_data').html('');
+	    			var newresult=JSON.parse(result);
+		    		var transform1 = [{'<>':'tr','html':[
+		  			  {'<>':'td','html':[
+		  	            	{"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
+		  	            ]},
+		              {'<>':'td','html':'${id}'},
+		              {'<>':'td','html':'${name}'},
+		              {'<>':'td','html':'${status}'},
+		            
+		          ]}];
+		  		$('#department_data').json2html(newresult.department,transform1);
+	    		}
 	    	}, 
 	    	error:function(error){
 	    	console.log(error,"inside error");
 	    	}
 	   });
 }
+}
+
+
+/*===========================================================================================================================================*/
+
+
+function blockDepartment(){
+	 var checked = [];
+	    $(":checkbox").map(function() {
+	        this.checked ? checked.push(this.id) : '';
+	    });
+	    alert("checked: " + checked);
+	    
+	    if(checked!='')
+	    	{
+	    	console.log("inside checked");
+	    $.ajax({
+	      url:base_url+"department/block", 
+	      type:"POST",
+	      data:{data:checked},
+	    	success: function(result){
+	    		console.log(result);
+	    		console.log("inside success");
+	    /*		if(result!=''){
+	    			
+	    			$('#department_data').html('');
+	    			var newresult=JSON.parse(result);
+		    		var transform1 = [{'<>':'tr','html':[
+		  			  {'<>':'td','html':[
+		  	            	{"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
+		  	            ]},
+		              {'<>':'td','html':'${id}'},
+		              {'<>':'td','html':'${name}'},
+		              {'<>':'td','html':'${status}'},
+		            
+		          ]}];
+		  		$('#department_data').json2html(newresult.department,transform1);
+	    		}*/
+	    	}, 
+	    	error:function(error){
+	    	console.log(error,"inside error");
+	    	}
+	   });
+}
+}
+
+/*==========================================================================================================================================*/

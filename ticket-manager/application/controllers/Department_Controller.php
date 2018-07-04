@@ -54,19 +54,38 @@
     	public function delete()
     	{
     	    $postData = $this->input->post();
+    	    
     	    $data= array(
     	        'department_id'=>$postData['data']
     	        
     	    );
     	    $result = $this->callService("Department_Service", "delete", $data, Rest_Client::POST);
-    	    print_r($result);
-    	/*     $result = json_decode($result, true); */
+    	    $result = json_decode($result, true);
+    	    $data= array("department"=>$result);
+    	    print_r(json_encode($data,true)); 
     	/*     if($result==true){
     	      $this->search();   */
     	    }
     	    
     	 
+    	
+    	
+    	public function block()
+    	{
+    	    $postData = $this->input->post();
+    	    
+    	    $data= array(
+    	        'department_id'=>$postData['data'],
+    	        'status'=>1
+    	        
+    	    );
+    	    
+    	    $result= $this->callService("Department_Service","block",$data,Rest_Client::POST);
+    	    $result= json_decode($result,true);
+    	    print_r(json_encode($data,true));
+    	    
     	}
-    
+    	
+    }
     
 ?>

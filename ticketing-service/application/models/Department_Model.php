@@ -42,12 +42,12 @@
 		}
 		
 		
-		function update($department)
+		function update($data)
 		{
 		    try{
 		        $this->db->trans_start();
 		        
-		        $this->db->update("department",$department,array($id=>$department->id));
+		        $this->db->update("department",$data,array($id=>$data->department_id));
 		        
 		        $this->db->trans_complete();
 		        
@@ -74,7 +74,7 @@
 	    try{
 	        $this->db->where_in('id',$data->department_id);
 	        $this->db->delete("department");
-	        $this->db->select('*');
+	        $this->db->select("id,name,case when status = 0 then 'ACTIVE' else 'BLOCK' end as status");
 	        $this->db->from("department");
 	        return $this->db->get()->result();
 	        
@@ -91,7 +91,7 @@
 	    try{
 	       // $result=array('status'=>'executed');
 	        
-	        $this->db->select("*");
+	        $this->db->select("id,name,case when status = 0 then 'ACTIVE' else 'BLOCK' end as status");
 	        $this->db->from("department");       
 	        $result['department']=$this->db->get()->result_array();
 	        
@@ -104,6 +104,24 @@
 	    return $result;
 	    
 	}
+	
+	function block($data)
+	{
+	    try{
+	        $this->db->where_in("id",$data->department_id);
+	        $this->db->update("department", $data->status);
+	        return $this->db->get()->result();
+	        
+	    }catch(Exception $e)
+	    {
+	        return FALSE;
+	    }
+	    
+	    
+	}
+	
+	
+	
 }
  
 ?>
