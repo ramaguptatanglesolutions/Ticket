@@ -1,20 +1,27 @@
 $("#search_agent").click(function(){
+	
+ alert(JSON.stringify($("#agentFilter").serializeArray()));
+	
+	
+	
 console.log("clicked",base_url);
 $("#div1").empty();
 $.ajax({
-	url:base_url+"agents/search", 
-  type:"GET",
-  dataType:"json",
+  url:base_url+"agents/search", 
+  type:"POST",
+  data:JSON.stringify($("#agentFilter").serializeArray()),
+  //dataType:"json",
 	success: function(result){
 		console.log("inside success");
 		console.log(result);
-		/*var len= result.agent.length;
-		console.log(len);*/
 
 		var transform ={"<>":"div","class":"col-md-9","html":[
 		{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
 		{"<>":"button","onclick":function(e){$("#add_agent").trigger("click");},"class":"btn btn-primary","value":"New Agent","html":"New Agent"},
-			  {"<>":"button","onclick":function(){return deleteAgent();},"type":"button","class":"btn btn-danger", "html":"Delete"},
+		  {"<>":"span","html":"&nbsp"},  
+		
+		{"<>":"button","onclick":function(){return deleteAgent();},"type":"button","class":"btn btn-danger", "html":"Delete"},
+		  {"<>":"span","html":"&nbsp"},
 			  {"<>":"button","type":"button","class":"btn btn-danger","html":"Block"},
 				{"<>":"br"},
 		    {"<>":"table","class":"table","id":"table","html":[
@@ -54,7 +61,7 @@ $.ajax({
 		var transformFilter={"<>":"div","class":"row","id":"filterDiv","html":[
 		    
 		    	{"<>":"div","class":"col-xs-3","id":"div2","html":[
-		    	{"<>":"form","method":"post","action":"<?php echo base_url()?>agents/filter","html":[
+		    	{"<>":"form","method":"post","id":"agentFilter","html":[
 		    	    {"<>":"h3","style":"margin-top:0px","html":"Filters"},
 		    	    {"<>":"hr","style":"margin-top:0px","html":""},
 		    	    {"<>":"div","class":"form-group","html":[
@@ -121,12 +128,22 @@ $.ajax({
 		    	
 		    ]};
 		$('#div1').json2html({},transformFilter);
-
+		$("#agentFilter").submit(function(e){
+			  //trigger serach agent
+			  e.preventDefault();
+			  alert("clicked");
+			  
+			  $("#search_agent").trigger("click");
+			  
+		});
 		}, 
+		
 error:function(error){
 	console.log(error,"inside error");
 		}
 	});
+
+
 });
 function deleteAgent(){
 	 var checked = [];

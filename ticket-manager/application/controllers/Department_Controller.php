@@ -14,12 +14,17 @@
     	
     	public function create()
     	{
-    	  //  $this->load->view('frame', array('title'=>'Departments/ Add Departments','page'=>'department'));
     	    $this->form_validation->set_rules('department', 'Department', 'required');
+    	
     	    if ($this->form_validation->run() == FALSE) {
-    	        $this->load->view('frame', 
-    	            array('title'=>'Departments/ Add Departments',
-    	            'page'=>'department'));
+    	        $error=($this->form_validation->error_array());
+    	        
+    	        $error_data = array(
+    	            "status"=>"failed",
+    	            "response"=>$error
+    	        );
+    	        print_r(json_encode($error_data));
+    	        
     	    }else{
     	        $postData = $this->input->post();
     	        $data= array(
@@ -27,8 +32,11 @@
     	            'name'=>$postData['department']
     	        );
     	        $result=$this->callService("Department_Service", "add", $data, Rest_Client::POST);
-    	        $result=json_decode($result);
-    	        print_r($result);
+    	        $Result_data = array(
+    	            "status"=>"success",
+    	            "response"=>json_decode($result)
+    	        );    	        
+    	        print_r(json_encode($Result_data));
     	        }
     	}
     	
@@ -39,17 +47,7 @@
     	  $result =json_decode($result,TRUE);
     	$data= array("department"=>$result); 
     	 print_r(json_encode($result,true)); 
-    	 
-/*     	 die(); */
-    	  
-    	 /*  $this->load->view(
-    	      
-    	      'frame',
-    	      array(
-    	        'title'=>'Departments/Search',
-    	          'page'=>'departments',
-    	          'department'=>$result['department']
-    	      )); */
+
     	}
     	public function delete()
     	{
@@ -63,8 +61,7 @@
     	    $result = json_decode($result, true);
     	    $data= array("department"=>$result);
     	    print_r(json_encode($data,true)); 
-    	/*     if($result==true){
-    	      $this->search();   */
+    	
     	    }
     	    
     	 
@@ -82,9 +79,11 @@
     	    
     	    $result= $this->callService("Department_Service","block",$data,Rest_Client::POST);
     	    $result= json_decode($result,true);
-    	    print_r(json_encode($data,true));
+    	    print_r(json_encode($result,true));
     	    
     	}
+    	
+    	
     	
     }
     

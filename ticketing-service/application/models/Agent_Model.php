@@ -77,7 +77,7 @@
             {
                 $result=array('status'=>'executed');
                 
-                $this->db->select("agent.id, agent_id,first_name, last_name, department.name as department, role.name as role,case when status = 0 then 'Active' else 'Block' end as status, rating",FALSE);
+                $this->db->select("agent.id, agent_id,first_name, last_name, department.name as department, role.name as role,case when agent.status = 0 then 'Active' else 'Block' end as status, rating",FALSE);
                 $this->db->from("agent");
                 $this->db->join("personal_info","agent.id=personal_info.id");
                 $this->db->join("department","department.id=agent.department");
@@ -119,15 +119,25 @@
         public function applyfilter($data){
             
             try{
-                $this->db->select('*');
-                $this->db->from('agent');
-                   $this->db->join("personal_info","agent.id=personal_info.id");
-                 $this->db->join("department","agent.department=department.id");
                 
-               
-                $this->db->where($data);
-             
-                return $this->db->get()->result();
+                log_message("info",json_encode($data));
+                
+                $this->db->select("agent.id, agent_id,first_name, last_name, department.name as department, role.name as role,case when agent.status = 0 then 'Active' else 'Block' end as status, rating",FALSE);
+                $this->db->from("agent");
+                $this->db->join("personal_info","agent.id=personal_info.id");
+                $this->db->join("department","department.id=agent.department");
+                $this->db->join("role","role.id=agent.role");
+                if(isset($data)){
+                    $this->db->where($data);
+                } 
+                return $result=$this->db->get()->result();
+                
+                /* $this->db->select('*');
+                $this->db->from('agent');
+                $this->db->join("personal_info","agent.id=personal_info.id");
+                $this->db->join("department","agent.department=department.id"); */
+                            
+                //return $this->db->get()->result();
                 
             }catch(Exception $e){
                 return false;

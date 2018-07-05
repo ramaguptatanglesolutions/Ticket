@@ -14,7 +14,41 @@ class Agent_Controller extends Session_Controller
 
     public function create()
     {
-       // print_r($_POST);
+       
+        $this->form_validation->set_rules('Agentid', 'Agent Id', 'required|valid_email');
+        $this->form_validation->set_rules('firstName', 'First Name', 'required|alpha');
+        $this->form_validation->set_rules('lastName', 'lastName', 'required|alpha');
+        $this->form_validation->set_rules('dob', 'dob', 'required');
+        $this->form_validation->set_rules('doj', 'doj', 'required');
+        $this->form_validation->set_rules('mailingAddressLine1', 'mailingAddressLine1', 'required');
+        $this->form_validation->set_rules('mailingAddressCity', 'mailingAddressCity', 'required|alpha');
+        $this->form_validation->set_rules('mailingAddressState', 'mailingAddressState', 'required|alpha');
+        $this->form_validation->set_rules('mailingAddressCountry', 'mailingAddressCountry', 'required|alpha');
+        $this->form_validation->set_rules('mailingAddressZipCode', 'mailingAddressZipCode', 'required|numeric');
+        $this->form_validation->set_rules('permanentAddressLine1', 'permanentAddressLine1', 'required');
+        $this->form_validation->set_rules('permanentAddressCity', 'permanentAddressCity', 'required|alpha');
+        $this->form_validation->set_rules('permanentAddressState', 'permanentAddressState', 'required|alpha');
+        $this->form_validation->set_rules('permanentAddressCountry', 'permanentAddressCountry', 'required|alpha');
+        $this->form_validation->set_rules('permanentAddressZipCode', 'permanentAddressZipCode', 'required|numeric');
+        $this->form_validation->set_rules('officialEmailId', 'officialEmailId', 'required|valid_email');
+        $this->form_validation->set_rules('countryCode', 'countryCode', 'numeric');
+        $this->form_validation->set_rules('areaCode', 'areaCode', 'numeric');
+        $this->form_validation->set_rules('phoneNo', 'phoneNo', 'numeric');
+        $this->form_validation->set_rules('mobileNo', 'mobileNo', 'required|numeric');
+        $this->form_validation->set_rules('extension', 'extension', 'required|numeric');
+        $this->form_validation->set_rules('personalEmailId', 'personalEmailId', 'required|valid_email');
+        $this->form_validation->set_rules('officialEmailId', 'officialEmailId', 'required|valid_email');
+    
+        if ($this->form_validation->run() == FALSE) {
+            $error=($this->form_validation->error_array());
+            
+            $error_data = array(
+                "status"=>"failed",
+                "response"=>$error
+            );
+            print_r(json_encode($error_data));
+            
+        }else{
         $postData=$this->input->post();
         $agent = array(
             "id" => $postData['id'],
@@ -62,239 +96,25 @@ class Agent_Controller extends Session_Controller
             'permanent_address' => $permanentAddress,
             'mailing_address' => $mailingAddress,
             'contact' => $contact,
+            
         );
-   
-  var_dump("kjhjkhkhiohkjiyih");
-        print_r($data);
-        
         $result=$this->callService("Agent_Service","add",$data,Rest_Client::POST);
         $result = json_decode($result, true);
-       // print_r($result);
+        $Result_data = array(
+            "status"=>"success",
+            "response"=>$result
+        );
+        print_r(json_encode($Result_data));
         }
-        
-        
-        /* $result1=$this->callService("Department_Service","search",NULL,Rest_Client::GET);
-      /*   $result1 =json_decode($result1,TRUE); */
-       /*   if ($this->input->post('submit') != NULL) {
-            
-            $postData = $this->input->post();
-            $this->form_validation->set_rules('id', 'Agent Id', 'required');   
-            $this->form_validation->set_rules('firstName', 'First Name', 'required');
-            $this->form_validation->set_rules('lastName', 'lastName', 'required');
-            $this->form_validation->set_rules('mailingAddressLine1', 'mailingAddress', 'required');
-            $this->form_validation->set_rules('mailingAddressCity', 'mailingAddressCity', 'required');
-            $this->form_validation->set_rules('mobileNo', 'mobileNo', 'required');
-            if ($this->form_validation->run() == FALSE) {
-                $agent = array(
-                    "id" => '',
-                    "role" => "3",
-                    "department" =>$result1['department']
-                );
-                $personalInfo = array(
-                    "first_name" => '',
-                    "last_name" => '',
-                    "gender" => '1',
-                    "date_of_birth" => '',
-                    "date_of_joining" => ''
-                );
-                $permanentAddress = array(
-                    "address_line_1" => '',
-                    "address_line_2" => '',
-                    "city" => '',
-                    "state" => '',
-                    "country" => '',
-                    "zip_code" => ''
-                );
-                $mailingAddress = array(
-                    "address_line_1" => '',
-                    "address_line_2" => '',
-                    "city" => '',
-                    "state" => '',
-                    "country" => '',
-                    "zip_code" => ''
-                );
-                $contact = array(
-                    "country_code" => '',
-                    "area_code" => '',
-                    "telephone_no" => '',
-                    "mobile_no" => '',
-                    "extension" => '',
-                    "personal_email_id" => '',
-                    "official_email_id" => ''
-                );
-                
-                $data = array(
-                    'agent' => $agent,
-                    'personal_info' => $personalInfo,
-                    'permanent_address' => $permanentAddress,
-                    'mailing_address' => $mailingAddress,
-                    "contact" => $contact,
-                    'roless'=>$this->session->userdata('role'),
-                    'dept'=>$this->session->userdata('department'),
-                    'name'=>$this->session->userdata('department_id')
-                );
-                $data = json_encode($data, true);
-                
-               $this->load->view('frame', array(
-                    'title' => 'Agents / Add New Agent',
-                    'page' => 'agent',
-                    'agent' => $data,
-                   
-                )); 
-            } else {
-                
-                $agent = array(
-                    "id" => $postData['id'],
-                    "password" => "password",
-                    "role" => $postData['role'],
-                    "department" => $postData['department'],
-                    "last_login" => "0"
-                );
-                $personalInfo = array(
-                    "first_name" => $postData['firstName'],
-                    "last_name" => $postData['lastName'],
-                    "gender" => '1',
-                    "date_of_birth" => $postData['dob'],
-                    "date_of_joining" => $postData['doj']
-                );
-                $permanentAddress = array(
-                    "address_line_1" => $postData['permanentAddressLine1'],
-                    "address_line_2" => $postData['permanentAddressLine2'],
-                    "city" => $postData['permanentAddressCity'],
-                    "state" => $postData['permanentAddressState'],
-                    "country" => $postData['permanentAddressCountry'],
-                    "zip_code" => $postData['permanentAddressZipCode']
-                );
-                $mailingAddress = array(
-                    "address_line_1" => $postData['mailingAddressLine1'],
-                    "address_line_2" => $postData['mailingAddressLine2'],
-                    "city" => $postData['mailingAddressCity'],
-                    "state" => $postData['mailingAddressState'],
-                    "country" => $postData['mailingAddressCountry'],
-                    "zip_code" => $postData['mailingAddressZipCode']
-                );
-                $contact = array(
-                    "country_code" => $postData['countryCode'],
-                    "area_code" => $postData['areaCode'],
-                    "telephone_no" => $postData['phoneNo'],
-                    "mobile_no" => $postData['mobileNo'],
-                    "extension" => $postData['extension'],
-                    "personal_email_id" => $postData['personalEmailId'],
-                    "official_email_id" => $postData['officialEmailId']
-                );
-                
-                $data = array(
-                    'agent' => $agent,
-                    'personal_info' => $personalInfo,
-                    'permanent_address' => $permanentAddress,
-                    'mailing_address' => $mailingAddress,
-                    "contact" => $contact,
-                    'roless'=>$this->session->userdata('role'),
-                    'dept'=>$this->session->userdata('department'),
-                    'name'=>$this->session->userdata('department_id')
-                    
-                );
-                
-                $result = $this->callService("agents", "add", $data, Rest_Client::POST);
-                
-                $result = json_decode($result, true);
-                 print_r($result);
-                 if ($result['status'] == "commit") {
-                    $result['data'] = $this->callService("agents", "search", NULL, Rest_Client::POST); 
-                   $result['data'] = json_decode($result['data'], true);
-                    /*
-                     * echo"<pre>";
-                     * print_r($result);
-                     * echo"</pre>";
-                     * die("died");
-                     */
-                 /*  if ($result != null) {
-                        $this->load->view('frame', array(
-                            'title' => 'Agents / Search Agents',
-                            'page' => 'agents',
-                            'agents' => $result['data'],
-                            'department'=>$result1,
-                            'roless'=>$this->session->userdata('role'),
-                            'dept'=>$this->session->userdata('department'),
-                            'name'=>$this->session->userdata('department_id')
-                        ));
-                    } 
-                }
-            }
-        }  */ 
-        /*     else {
-            $agent = array(
-                "id" => '',
-                "role" => "3",
-                "department" => $result1
-            );
-            $personalInfo = array(
-                "first_name" => '',
-                "last_name" => '',
-                "gender" => '1',
-                "date_of_birth" => '',
-                "date_of_joining" => ''
-            );
-            $permanentAddress = array(
-                "address_line_1" => '',
-                "address_line_2" => '',
-                "city" => '',
-                "state" => '',
-                "country" => '',
-                "zip_code" => ''
-            );
-            $mailingAddress = array(
-                "address_line_1" => '',
-                "address_line_2" => '',
-                "city" => '',
-                "state" => '',
-                "country" => '',
-                "zip_code" => ''
-            );
-            $contact = array(
-                "country_code" => '',
-                "area_code" => '',
-                "telephone_no" => '',
-                "mobile_no" => '',
-                "extension" => '',
-                "personal_email_id" => '',
-                "official_email_id" => ''
-            );
-            $data = array(
-                'agent' => $agent,
-                 'personal_info' => $personalInfo,
-                'permanent_address' => $permanentAddress,
-                'mailing_address' => $mailingAddress,
-                "contact" => $contact, 
-                'roless'=>$this->session->userdata('role'),
-                'dept'=>$this->session->userdata('department'),
-                'name'=>$this->session->userdata('department_id')
-            );
-            $data = json_decode(json_encode($data), true);
-      /*      print_r($data);
-            die('htryttyut'); */ 
-           /*  $this->load->view('frame', array(
-                'title' => 'Agents / Add New Agent',
-                'page' => 'agent',
-                'agent' => $data,
-               // 'department'=>$result1
-            ));
-      */
-    
-
+    }
+  
     public function search()
     {
         if ($this->input->get('id') != null) {
             $id = $this->input->get('id');
             $result = $this->callService("agents", "get", $id, Rest_Client::POST);
             $result = json_decode($result, true);
-            
-         /*  print_r($result['data']);
-            die("mbmbmbhb hhb m");  */
              print_r(json_encode($result,true));
-            
-         // $this->load->view('agents',array('agent'=>$result['data'])); 
-           //   die('died');
       if ($result['status'] == "executed") {
                 $this->load->view('frame', array(
                     'title' => 'Agents / Search Agents / (ID: ' . $id . ')',
@@ -303,7 +123,22 @@ class Agent_Controller extends Session_Controller
                 ));
             }
         } else { 
-            $result = $this->callService("agents", "search", NULL, Rest_Client::POST);
+            
+           
+            
+            $data = array();
+            $postData=$this->input->post();
+           
+            if (isset($postData) && isset($postData['id']))
+                $data['agent.id'] = $postData['id'];
+                if (isset($postData) && isset($postData['firstName']))
+                $data['first_name'] = $postData['firstName'];
+                if (isset($postData) && isset($postData['lastName']))
+                 $data['last_name'] = $postData['lastName'];
+                 log_message("info",json_encode($postData)."xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            
+            
+            $result = $this->callService("Agent_Service", "filter", $data, Rest_Client::POST);
             
             $result =json_decode($result,true);
             
@@ -316,15 +151,6 @@ class Agent_Controller extends Session_Controller
             }else{
                 echo json_encode("No Data Found");
             }
-     
-         /*   die("hgdjgsjg");
-            if ($result != NULL) {
-                $this->load->view('frame', array(
-                    'title' => 'Agents / Search Agents',
-                    'page' => 'agents',
-                   // 'agents' => $result
-                ));
-            } */
     
     } 
     }
@@ -367,7 +193,6 @@ class Agent_Controller extends Session_Controller
     }
     
     public function deleteAgent(){
-      //  print_r($_POST);
         $postData = $this->input->post();
         $data= array(
             'agent_id'=>$postData['data']

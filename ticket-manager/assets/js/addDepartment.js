@@ -17,8 +17,11 @@ var transform= {"<>":"form","id":"departmentForm","method":"post","html":[
             {"<>":"h3","class":"page-header","style":"margin-top:20px;","html":"Department Detail"},
             {"<>":"div","class":"form-group","html":[
                 {"<>":"label","class":"control-label","for":"id","html":"Department Name"},
-                {"<>":"input","type":"text","class":"form-control","id":"id","name":"department","placeholder":"department name","html":""},
-                {"<>":"font","color":"red","html":" "}
+                {"<>":"font","color":"red","html":[
+                    {"<>":"span","html":"*"}
+                  ]},
+                {"<>":"input","type":"text","class":"form-control","name":"department","placeholder":"department name","required":"required","html":""},
+                {"<>":"font","color":"red","id":"department","html":" "}
               ]}
           ]}
       ]},
@@ -36,18 +39,30 @@ $('#div1').json2html({},transform);
 			
 });			
 			function addDepartment(){
-				alert( $("#departmentForm").serialize());
+				
 					$("#departmentForm").submit(function(e) {
-
+						e.preventDefault();
 					    var url = base_url+"departments/new"; // the script where you handle the form input.
-				alert(url);
+				//alert(url);
 					    $.ajax({
+					    	 async: false,
 					           type: "POST",
 					           url: url,
+					           dataType:"json", 
 					           data: $("#departmentForm").serialize(), // serializes the form's elements.
 					           success: function(data)
 					           {
-					               alert(data); // show response from the php script.
+					        	  
+					        	   console.log(data.status);
+					        	   if(data.status=="failed"){
+					        		   $("#department").html("").html(data.response.department);
+					        	   }else if(data.status=="success"){
+					        		    swal("Saved!", "Department added successfully.", "success");
+					        		    $("#search_department").trigger("click");
+					        	   }
+					        	   
+					        	   
+					               console.log(data); // show response from the php script.
 					           }
 					         });	
 				});

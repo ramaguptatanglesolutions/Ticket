@@ -10,8 +10,9 @@ $.ajax({
 		console.log(result);
 		var transform ={"<>":"div","class":"col-md-9","html":[
 			{"<>":"button","onclick":function(e){$("#add_department").trigger("click");},"class":"btn btn-primary","value":"New Department","html":"New Department"},
-			  {"<>":"button","type":"button","onclick":function(){return deleteDepartment();},"class":"btn btn-danger","html":"Delete"},
-
+			  {"<>":"span","html":"&nbsp"},
+			{"<>":"button","type":"button","onclick":function(){return deleteDepartment();},"class":"btn btn-danger","html":"Delete"},
+			  {"<>":"span","html":"&nbsp"},
 			{"<>":"button","type":"button","onclick":function(){return blockDepartment();},"class":"btn btn-danger","html":"Block"},
 
 			{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
@@ -62,7 +63,7 @@ function deleteDepartment(){
 	        this.checked ? checked.push(this.id) : '';
 	    });
 	    //alert("checked: " + checked);
-	    
+
 	    if(checked!='')
 	    	{
 	    	
@@ -115,21 +116,9 @@ function blockDepartment(){
 	    	success: function(result){
 	    		console.log(result);
 	    		console.log("inside success");
-	    /*		if(result!=''){
-	    			
-	    			$('#department_data').html('');
-	    			var newresult=JSON.parse(result);
-		    		var transform1 = [{'<>':'tr','html':[
-		  			  {'<>':'td','html':[
-		  	            	{"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
-		  	            ]},
-		              {'<>':'td','html':'${id}'},
-		              {'<>':'td','html':'${name}'},
-		              {'<>':'td','html':'${status}'},
-		            
-		          ]}];
-		  		$('#department_data').json2html(newresult.department,transform1);
-	    		}*/
+	if(result){
+		$("#search_department").trigger("click");	
+	    	}
 	    	}, 
 	    	error:function(error){
 	    	console.log(error,"inside error");

@@ -108,10 +108,10 @@
 	function block($data)
 	{
 	    try{
+	        $this->db->set('status',$data->status);
 	        $this->db->where_in("id",$data->department_id);
-	        $this->db->update("department", $data->status);
-	        return $this->db->get()->result();
-	        
+	        $this->db->update("department");
+	        return true;
 	    }catch(Exception $e)
 	    {
 	        return FALSE;

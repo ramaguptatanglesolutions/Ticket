@@ -15,6 +15,7 @@
 	rel="stylesheet" type="text/css">
 <link href="<?php echo base_url();?>assets/css/custom.css"
 	rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="<?php echo base_url();?>assets/css/sweetalert.css">
 
 <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
@@ -41,7 +42,7 @@
 			<div class="menu_section">
 				<h3><?php echo $this->session->userdata('department');?></h3>
 				<h3><?php $role = $this->session->userdata('role');
-    // echo $role; ?></h3>
+                     ?></h3>
 				<ul class="nav side-menu">
 					<li><a><i class="fa fa-file-text"></i> Tickets <span
 							class="fa fa-chevron-down"></span></a>
@@ -112,7 +113,7 @@ var base_url='<?php echo base_url();?>';
 </script> 
 <!-- custom js script -->  
 <script src="<?php echo base_url();?>assets/js/custom.js"></script>
-
+<!-- ------------------------Scripts for loading View Contents---------------------------->
 <!-- Search Agent Script-->
 <script src="<?php  echo base_url();?>assets/js/searchAgent.js"></script> 
 <!-- Self Assigned Script -->
@@ -122,7 +123,7 @@ var base_url='<?php echo base_url();?>';
 <script src="<?php  echo base_url();?>assets/js/addAgent.js"></script>
 <!--  Search Department-->
 <script src="<?php  echo base_url();?>assets/js/searchDepartment.js"></script>
-<!-- New Ticket -->
+<!-- Add Ticket -->
 <script src="<?php  echo base_url();?>assets/js/newTicket.js"></script>
 <!-- Open Ticket -->
 <script src="<?php  echo base_url();?>assets/js/openTicket.js"></script>
@@ -130,6 +131,7 @@ var base_url='<?php echo base_url();?>';
 <script src="<?php  echo base_url();?>assets/js/queuedTicket.js"></script>
 <!-- Add Department -->
 <script src="<?php  echo base_url();?>assets/js/addDepartment.js"></script>
-
+<!-- ----------------------------Sweet Alert Script------------------------------------ -->
+<script src="<?php  echo base_url();?>assets/js/sweetalert.min.js"></script>
 
 </html>
