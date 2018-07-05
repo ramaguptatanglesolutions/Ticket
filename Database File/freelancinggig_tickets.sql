@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2018 at 03:05 PM
+-- Generation Time: Jul 05, 2018 at 03:18 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `zip_code` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `address_ibfk_1` (`agent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
 
 --
 -- Dumping data for table `address`
@@ -46,10 +46,20 @@ CREATE TABLE IF NOT EXISTS `address` (
 
 INSERT INTO `address` (`id`, `agent`, `type`, `address_line_1`, `address_line_2`, `city`, `state`, `country`, `zip_code`) VALUES
 (66, 'sukant@gmail.com', 1, 'zvxjgs', 'bvmbmbb', 'alld', 'uttarpradesh', 'india', 22432),
-(71, 'eius@gmail.com', 1, 'libero', 'quisquam', 'consequuntur', 'cum', 'nulla', 0),
-(72, 'eius@gmail.com', 2, 'aliquam', 'aut', 'mollitia', 'dolorem', 'molestias', 0),
 (73, 'sed@gmail.com', 1, 'rerum', 'aut', 'porro', 'excepturi', 'est', 0),
-(74, 'sed@gmail.com', 2, 'veniam', 'qui', 'quibusdam', 'accusamus', 'in', 0);
+(74, 'sed@gmail.com', 2, 'veniam', 'qui', 'quibusdam', 'accusamus', 'in', 0),
+(75, 'Graciela72@gmail.com', 1, 'deserunt', 'qui', 'ipsam', 'voluptatem', 'perspiciatis', 0),
+(76, 'Graciela72@gmail.com', 2, 'et', 'voluptatem', 'porro', 'doloribus', 'ipsum', 0),
+(77, 'Emmie.Bosco@yahoo.co', 1, 'quas', 'impedit', 'animi', 'necessitatibus', 'hic', 0),
+(78, 'Emmie.Bosco@yahoo.co', 2, 'consequatur', 'voluptatem', 'deserunt', 'beatae', 'ipsum', 0),
+(79, 'Keeley34@hotmail.com', 1, 'eos', 'vel', 'cupiditate', 'eos', 'praesentium', 0),
+(80, 'Keeley34@hotmail.com', 2, 'consequatur', 'alias', 'blanditiis', 'sed', 'ducimus', 0),
+(81, 'Jayce47@yahoo.com', 1, 'mollitia', 'aspernatur', 'quos', 'voluptates', 'ut', 0),
+(82, 'Jayce47@yahoo.com', 2, 'facilis', 'vel', 'ut', 'assumenda', 'vero', 0),
+(83, 'Krystina_Smith70@hot', 1, 'iste', 'possimus', 'numquam', 'consequatur', 'aut', 0),
+(84, 'Krystina_Smith70@hot', 2, 'ullam', 'voluptatem', 'aut', 'assumenda', 'asperiores', 0),
+(85, 'Vern.Bruen@yahoo.com', 1, 'ut', 'quia', 'perferendis', 'rerum', 'placeat', 0),
+(86, 'Vern.Bruen@yahoo.com', 2, 'alias', 'rerum', 'minima', 'libero', 'quia', 0);
 
 -- --------------------------------------------------------
 
@@ -68,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `agent` (
   `rating` int(11) NOT NULL,
   PRIMARY KEY (`agent_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `agent`
@@ -76,8 +86,13 @@ CREATE TABLE IF NOT EXISTS `agent` (
 
 INSERT INTO `agent` (`agent_id`, `id`, `password`, `last_login`, `role`, `department`, `status`, `rating`) VALUES
 (12, 'sukant@gmail.com', 'password', 0, 1, 5, 0, 0),
-(16, 'eius@gmail.com', 'password', 0, 2, 4, 0, 0),
-(17, 'sed@gmail.com', 'password', 0, 2, 4, 0, 0);
+(17, 'sed@gmail.com', 'password', 0, 2, 4, 0, 0),
+(18, 'Graciela72@gmail.com', 'password', 0, 2, 35, 0, 0),
+(19, 'Emmie.Bosco@yahoo.co', 'password', 0, 2, 34, 0, 0),
+(21, 'Keeley34@hotmail.com', 'password', 0, 2, 5, 0, 0),
+(22, 'Jayce47@yahoo.com', 'password', 0, 2, 43, 0, 0),
+(23, 'Krystina_Smith70@hot', 'password', 0, 2, 44, 0, 0),
+(24, 'Vern.Bruen@yahoo.com', 'password', 0, 2, 44, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -102,9 +117,14 @@ CREATE TABLE IF NOT EXISTS `contact` (
 --
 
 INSERT INTO `contact` (`id`, `country_code`, `area_code`, `telephone_no`, `mobile_no`, `extension`, `personal_email_id`, `official_email_id`) VALUES
-('eius@gmail.com', 0, 0, 0, 0, 0, 'Gavin_Skiles@gmail.com', 'Marilyne.Williamson59@gmail.com'),
+('Emmie.Bosco@yahoo.co', 0, 0, 0, 0, 0, 'Marley.Schroeder44@yahoo.com', 'Karley98@gmail.com'),
+('Graciela72@gmail.com', 0, 0, 0, 0, 0, 'Fay_Waters63@yahoo.com', 'Ashton.Walter45@hotmail.com'),
+('Jayce47@yahoo.com', 0, 0, 0, 0, 0, 'Aidan.Wolf25@gmail.com', 'Reid40@yahoo.com'),
+('Keeley34@hotmail.com', 0, 0, 0, 0, 0, 'Miller.Ondricka@hotmail.com', 'Mariano5@hotmail.com'),
+('Krystina_Smith70@hot', 0, 0, 0, 0, 0, 'Andreane22@hotmail.com', 'Christina.Kilback2@hotmail.com'),
 ('sed@gmail.com', 0, 0, 0, 0, 0, 'Rosa_Dickinson10@yahoo.com', 'Boris.Quitzon@hotmail.com'),
-('sukant@gmail.com', 123, 123, 123456, 890789099, 767678, 'ab@ex.com', 'ab@ex.com');
+('sukant@gmail.com', 123, 123, 123456, 890789099, 767678, 'ab@ex.com', 'ab@ex.com'),
+('Vern.Bruen@yahoo.com', 0, 0, 0, 0, 0, 'Angeline20@yahoo.com', 'Laurianne80@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -117,16 +137,17 @@ CREATE TABLE IF NOT EXISTS `department` (
   `name` varchar(255) NOT NULL,
   `status` int(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `department`
 --
 
 INSERT INTO `department` (`id`, `name`, `status`) VALUES
-(4, 'Sales Department', 0),
-(5, 'Technical Department', 0),
-(33, 'new Department', 0);
+(4, 'Sales Department', 1),
+(5, 'Technical Department', 1),
+(47, 'Marketing Department', 0),
+(48, 'Finance Department', 0);
 
 -- --------------------------------------------------------
 
@@ -149,9 +170,14 @@ CREATE TABLE IF NOT EXISTS `personal_info` (
 --
 
 INSERT INTO `personal_info` (`id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `date_of_joining`) VALUES
-('eius@gmail.com', 'dignissimos', 'dicta', 1, '2183-12-05', '2291-03-01'),
+('Emmie.Bosco@yahoo.co', 'quos', 'molestiae', 1, '2852-01-02', '2627-12-01'),
+('Graciela72@gmail.com', 'assumenda', 'suscipit', 1, '2550-10-03', '2221-08-06'),
+('Jayce47@yahoo.com', 'pariatur', 'quia', 1, '2714-07-02', '2608-07-07'),
+('Keeley34@hotmail.com', 'sequi', 'mollitia', 1, '2148-10-02', '2699-11-06'),
+('Krystina_Smith70@hot', 'reprehenderit', 'ut', 1, '2497-06-03', '2547-01-04'),
 ('sed@gmail.com', 'ut', 'eaque', 1, '2921-01-02', '2279-10-07'),
-('sukant@gmail.com', 'sukant', 'tiwari', 1, '0000-00-00', '0000-00-00');
+('sukant@gmail.com', 'sukant', 'tiwari', 1, '0000-00-00', '0000-00-00'),
+('Vern.Bruen@yahoo.com', 'illum', 'quis', 1, '2550-02-01', '2904-09-03');
 
 -- --------------------------------------------------------
 
