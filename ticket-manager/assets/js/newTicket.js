@@ -2,9 +2,13 @@ $("#new_ticket").click(function(){
 console.log("clicked",base_url);
 $("#div1").empty();
 $.ajax({
-	url:base_url+"tickets/new", 
-	type:"POST",
+	
+	url:base_url+"departments/search",
+	type:"GET",
+	dataType:"json",
 	success: function(result){
+		console.log(result.department);
+	var department_transform={"<>":"option","value":"${id}","html":"${name}"};
 	var transform={"<>":"form","id":"addTicketform","method":"post","action":"","html":[
 	    {"<>":"div","class":"row","html":[
 	        {"<>":"div","class":"col-sm-6","html":[
@@ -29,9 +33,10 @@ $.ajax({
 	                ]},
 	                {"<>":"div","class":"form-group","html":[
 	                    {"<>":"label","class":"control-label","for":"department","html":"Department:"},
-	                    {"<>":"select","class":"form-control","id":"department","name":"department","html":[
-	                        {"<>":"option","value":"4","html":"Sales Department"}
-	                      ]}
+	                    {"<>":"select","class":"form-control","id":"department","name":"department","html":function(){
+	                		return $.json2html(result.department,department_transform); 
+	                	}
+	                    }
 	                  ]},
 	                  {"<>":"div","class":"form-group","html":[
 	                      {"<>":"label","class":"control-label","for":"priority","html":"Chosse Priority:"},
@@ -68,11 +73,20 @@ $('#div1').json2html({},transform);
 	    	   async: false,
 	           type: "POST",
 	           url: url,
+	           dataType:"json",
 	           data: $("#addTicketform").serialize(), // serializes the form's elements.
 	           success: function(data)
 	           {
-	               alert(data); // show response from the php script.
-	               console.log("inside success");
+	        	   console.log("inside success");
+	        	   console.log(data);
+	        	   if(data.status=="failed"){
+//	        		   $("#").html("").html(data.response.department);
+	        		   alert("error");
+	        	   }else if(data.status=="success"){
+	        		    swal("Saved!", "Ticket added successfully.", "success");
+	        		    $("#queued_ticket").trigger("click");
+	        	   }
+	        	   
 	           }
 	         });	
 });

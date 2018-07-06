@@ -162,6 +162,21 @@
             
         }
         
+        function block($data)
+        {
+            try{
+                $this->db->set("status",$data->status);
+                $this->db->where_in("agent_id",$data->agent_id);
+                $this->db->update("agent");
+                return true;
+            }catch(Exception $e)
+            {
+                return FALSE;
+            }
+            
+            
+        }
+        
         
 	}
 ?>

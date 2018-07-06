@@ -11,9 +11,9 @@ $.ajax({
 		var transform ={"<>":"div","class":"col-md-9","html":[
 			{"<>":"button","onclick":function(e){$("#add_department").trigger("click");},"class":"btn btn-primary","value":"New Department","html":"New Department"},
 			  {"<>":"span","html":"&nbsp"},
-			{"<>":"button","type":"button","onclick":function(){return deleteDepartment();},"class":"btn btn-danger","html":"Delete"},
+			{"<>":"button","type":"button","onclick":function(){return deleteDepartment();},"class":"btn btn-danger","id":"delete","html":"Delete"},
 			  {"<>":"span","html":"&nbsp"},
-			{"<>":"button","type":"button","onclick":function(){return blockDepartment();},"class":"btn btn-danger","html":"Block"},
+			{"<>":"button","type":"button","onclick":function(){return blockDepartment();},"class":"btn btn-danger","id":"block","html":"Block"},
 
 			{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
 			
@@ -21,40 +21,37 @@ $.ajax({
 			    {"<>":"table","class":"table","id":"table","html":[
 			        {"<>":"thead","html":[
 			            {"<>":"tr","html":[
+			            	{"<>":"th","html":"Select"},
 			            	  {"<>":"th","html":"S.No."},
-			                {"<>":"th","html":"Id"},
 			                {"<>":"th","html":"Department"},
 			                {"<>":"th","html":"Status"},
-			               /* {"<>":"th","html":"Role"},
-			                
-			                {"<>":"th","html":"Id"}*/
+			              
 			              ]}
 			          ]},
 			          {"<>":"tbody","id":"department_data","html":""}
 			      ]}
 				  ]}
+			
 			  ]}; 
+		
 		$('#div1').json2html({},transform);
 
 		var transform1 = {'<>':'tr','html':[
 			  {'<>':'td','html':[
-	            	{"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
+				  {"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
 	            ]},
-            {'<>':'td','html':'${id}'},
+            	{"<>":"td","html":function(result,index){return (' '+(index+1));}},
             {'<>':'td','html':'${name}'},
             {'<>':'td','html':'${status}'},
-           /* {'<>':'td','html':'${}'},
            
-            {'<>':'td','html':'${id}'},*/
-          
         ]};
+		
 		$('#department_data').json2html(result.department,transform1);
-	},
-	
-	});
+},
+});
 });
 
-/*===========================================================================================================================================*/
+/*=========================================Delete Department Function===========================================================================*/
 
 
 function deleteDepartment(){
@@ -80,6 +77,8 @@ function deleteDepartment(){
 		  			  {'<>':'td','html':[
 		  	            	{"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
 		  	            ]},
+		            	{"<>":"td","html":function(result,index){return (' '+(index+1));}},
+
 		              {'<>':'td','html':'${id}'},
 		              {'<>':'td','html':'${name}'},
 		              {'<>':'td','html':'${status}'},
@@ -96,7 +95,7 @@ function deleteDepartment(){
 }
 
 
-/*===========================================================================================================================================*/
+/*============================================Block Department Function=============================================================================*/
 
 
 function blockDepartment(){

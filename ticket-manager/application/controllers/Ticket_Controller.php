@@ -3,13 +3,72 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require (APPPATH . 'libraries\Session_Controller.php');
 
-//
+
 class Ticket_Controller extends Session_Controller
 {
-
-    // This method is used
-    public function create($param = "")
+    public function __construct()
     {
+        parent::__construct();
+        $this->load->library('form_validation');
+    }
+
+    public function create()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('client_id', 'Client Id', 'required');
+        $this->form_validation->set_rules('subject', 'Subject', 'required');
+        $this->form_validation->set_rules('service', 'Service', 'required');
+        $this->form_validation->set_rules('department', 'Department', 'required');
+        $this->form_validation->set_rules('priority', 'Priority', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $error=($this->form_validation->error_array());
+            
+            $error_data = array(
+                "status"=>"failed",
+                "response"=>$error
+            );
+            print_r(json_encode($error_data));
+            
+        }else{
+            $postData = $this->input->post();
+            
+            $tickets = array(
+                'id' => $postData['id'],
+                'client' => $postData['client_id'],
+                'open_date' => date("Y-m-d H:i:s", time()),
+                'close_date' => NULL,
+                'subject' => $postData['subject'],
+                'service' => $postData['service'],
+                'department' => $postData['department'],
+                'priority' => $postData['priority'],
+                'status' => '2'
+                
+            );
+            
+            $thread = array(
+                'agent' => null,
+                'type' => 1,
+                'date' => date("Y-m-d H:i:s", time()),
+                'text' => $postData['text'],
+                'status' => '2'
+            );
+            
+            $data = array(
+                'ticket' => $tickets,
+                'thread' => $thread
+            );
+            
+            $result = $this->callService("TicketServices", "add", $data, Rest_Client::POST);
+            $result = json_decode($result, True);
+            $Result_data = array(
+                "status"=>"success",
+                "response"=>$result
+            );
+            print_r(json_encode($Result_data));
+        }
+            
+            
+        }
 /*         $this->load->library('form_validation');
         if (count($this->input->post()) < 1) {
             $res = $this->callService('Department_Service', 'search', NULL, Rest_Client::GET);
@@ -86,9 +145,8 @@ class Ticket_Controller extends Session_Controller
                     //echo '<script> alert("Fill up the fields correctly");</script>';
                 } */
         
-        echo "1";
+ 
         
-            }
        
    
 

@@ -127,11 +127,24 @@
 		        $data = $this->model->delete($delete);
 		        $this->response($data);
 		    } catch (Exception $e) {
-		        
 		        $result = array(
 		            "status" => "exception",
 		            "exception" => $e->getMessage()
 		        );
+		        $this->response($result);
+		    }
+		}
+		
+		public function block_post()
+		{
+		    try {
+		        $block = json_decode($this->post('data'));
+		        $data=$this->model->block($block);
+		        $this->response($data);
+
+		    } catch (Exception $e) {
+		        
+		        $result= array("status"=>"exception", "exception"=>$e->getMessage());
 		        $this->response($result);
 		    }
 		}

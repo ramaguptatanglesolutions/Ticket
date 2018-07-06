@@ -11,11 +11,10 @@ class Agent_Controller extends Session_Controller
         parent::__construct();
         $this->load->library('form_validation');
     }
-
-    public function create()
+    
+   public function create()
     {
-       
-        $this->form_validation->set_rules('Agentid', 'Agent Id', 'required|valid_email');
+        $this->form_validation->set_rules('id', 'Agent Id', 'required|valid_email');
         $this->form_validation->set_rules('firstName', 'First Name', 'required|alpha');
         $this->form_validation->set_rules('lastName', 'lastName', 'required|alpha');
         $this->form_validation->set_rules('dob', 'dob', 'required');
@@ -30,16 +29,14 @@ class Agent_Controller extends Session_Controller
         $this->form_validation->set_rules('permanentAddressState', 'permanentAddressState', 'required|alpha');
         $this->form_validation->set_rules('permanentAddressCountry', 'permanentAddressCountry', 'required|alpha');
         $this->form_validation->set_rules('permanentAddressZipCode', 'permanentAddressZipCode', 'required|numeric');
-        $this->form_validation->set_rules('officialEmailId', 'officialEmailId', 'required|valid_email');
-        $this->form_validation->set_rules('countryCode', 'countryCode', 'numeric');
+     /*    $this->form_validation->set_rules('countryCode', 'countryCode', 'numeric');
         $this->form_validation->set_rules('areaCode', 'areaCode', 'numeric');
-        $this->form_validation->set_rules('phoneNo', 'phoneNo', 'numeric');
+        $this->form_validation->set_rules('phoneNo', 'phoneNo', 'numeric'); */
         $this->form_validation->set_rules('mobileNo', 'mobileNo', 'required|numeric');
         $this->form_validation->set_rules('extension', 'extension', 'required|numeric');
         $this->form_validation->set_rules('personalEmailId', 'personalEmailId', 'required|valid_email');
         $this->form_validation->set_rules('officialEmailId', 'officialEmailId', 'required|valid_email');
-    
-        if ($this->form_validation->run() == FALSE) {
+       if ($this->form_validation->run() == FALSE) {
             $error=($this->form_validation->error_array());
             
             $error_data = array(
@@ -47,7 +44,6 @@ class Agent_Controller extends Session_Controller
                 "response"=>$error
             );
             print_r(json_encode($error_data));
-            
         }else{
         $postData=$this->input->post();
         $agent = array(
@@ -106,7 +102,7 @@ class Agent_Controller extends Session_Controller
         );
         print_r(json_encode($Result_data));
         }
-    }
+    } 
   
     public function search()
     {
@@ -123,26 +119,11 @@ class Agent_Controller extends Session_Controller
                 ));
             }
         } else { 
-            
-           
-            
-            $data = array();
-            $postData=$this->input->post();
-           
-            if (isset($postData) && isset($postData['id']))
-                $data['agent.id'] = $postData['id'];
-                if (isset($postData) && isset($postData['firstName']))
-                $data['first_name'] = $postData['firstName'];
-                if (isset($postData) && isset($postData['lastName']))
-                 $data['last_name'] = $postData['lastName'];
-                 log_message("info",json_encode($postData)."xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            
-            
-            $result = $this->callService("Agent_Service", "filter", $data, Rest_Client::POST);
+     
+            $result = $this->callService("Agent_Service", "search", Null, Rest_Client::POST);
             
             $result =json_decode($result,true);
-            
-            
+      
             $data=array(
                 'agents'=>$result
             );
@@ -158,6 +139,7 @@ class Agent_Controller extends Session_Controller
 
     public function filter()
     {
+       // print_r($_POST);
         $data = array();
         $postData = $this->input->post();
         
@@ -166,7 +148,9 @@ class Agent_Controller extends Session_Controller
         if ($_POST['firstName'] != null)
             $data['first_name'] = $postData['firstName'];
         if (($_POST['lastName']) != null)
-            $data['last_name'] = $postData['lastName'];
+            $data['last_name'] = $postData['lastName']; 
+            if ($_POST['type'] != 'All')
+                $data['role'] = $postData['type'];
        /*  if (($_POST['department']) != 'All')
             $data['department'] = $postData['department']; */
       /*   if (($_POST['status']) != 'All')
@@ -179,17 +163,17 @@ class Agent_Controller extends Session_Controller
         // print_r($data);
         $result = $this->callService("Agent_Service", "filter", $data, Rest_Client::POST);
         // print_r($result);
-        $result = json_decode($result, true);
-        // print_r($result);
+       $result = json_decode($result, true);
+         print_r(json_encode($result));
         
-        if ($result != NULL) {
+     /*    if ($result != NULL) {
             $this->load->view('frame', array(
                 'title' => 'Agent/Details',
                 'page' => 'agents',
                 'agents' => $result
             
             ));
-        }
+        } */
     }
     
     public function deleteAgent(){
@@ -200,12 +184,28 @@ class Agent_Controller extends Session_Controller
         );
         print_r($data);
         $result=$this->callService("Agent_Service","delete",$data,Rest_Client::POST);
-        $result= json_decode($result,true);
-        
-        
+        $result= json_decode($result,true); 
         print_r(json_encode($result,true));
 
     }
+    
+    public function block(){
+
+      $postData = $this->input->post();
+        
+        $data= array(
+            'agent_id'=>$postData['data'],
+            'status'=>1
+            
+        );
+      $result= $this->callService("Agent_Service","block",$data,Rest_Client::POST);
+        $result= json_decode($result,true);
+        print_r(json_encode($result,true));
+          
+        
+        
+    }
+    
 }
 
 ?>

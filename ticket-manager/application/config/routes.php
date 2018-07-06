@@ -28,7 +28,7 @@ $route['agents/new'] = 'Agent_Controller/create';
 $route['agents/search'] = 'Agent_Controller/search';
 $route['agents/filter']= 'Agent_Controller/filter';
 $route['agents/delete']='Agent_Controller/delete';
-
+$route['agents/block']= 'Agent_Controller/block';
 
 $route['departments/new'] = 'Department_Controller/create';
 $route['departments/search'] = 'Department_Controller/search';

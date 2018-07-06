@@ -8,7 +8,7 @@ $.ajax({
 	success: function(result){
 		console.log("inside success");
 		console.log(result);
-		
+/*=========================================Table======================================================*/		
 	var transform={"<>":"div","class":"col-md-9","html":[
 		{"<>":"button","type":"button","class":"btn btn-danger","html":"Delete"},
 		{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
@@ -17,6 +17,7 @@ $.ajax({
 	    {"<>":"table","class":"table","id":"table","html":[
 	        {"<>":"thead","html":[
 	            {"<>":"tr","html":[
+	            	{"<>":"th","html":"Select"},
 	            	  {"<>":"th","html":"S.No."},
 	    
 	                {"<>":"th","html":"Ref No."},
@@ -37,6 +38,8 @@ var transform1 = {'<>':'tr','html':[
 	  {'<>':'td','html':[
       	{"<>":"input", "type":"checkbox","value":'${this.index}'}
       ]},
+  	{"<>":"td","html":function(result,index){return (' '+(index+1));}},
+
 
   {'<>':'td','html':'${id}'},
   {'<>':'td','html':'${client}'},
@@ -48,20 +51,21 @@ var transform1 = {'<>':'tr','html':[
 ]};
 
 $('#department_data').json2html(result.ticket,transform1);
-	
-	
+/*=====================================================================================================*/
+/*==============================Filter Form Transform======================================================*/
+
 var transformFilter={"<>":"div","class":"row","id":"filterDiv","html":[
     
 	{"<>":"div","class":"col-xs-3","id":"div2","html":[
-	{"<>":"form","method":"post","action":"<?php echo base_url()?>agents/filter","html":[
+	{"<>":"form","method":"post","id":"ticketFilter","html":[
 	    {"<>":"h3","style":"margin-top:0px","html":"Filters"},
 	    {"<>":"hr","style":"margin-top:0px","html":""},
 	    {"<>":"div","class":"form-group","html":[
-	        {"<>":"label","class":"control-label","for":"id","html":"Agent Id"},
+	        {"<>":"label","class":"control-label","for":"id","html":"Client Id"},
 	        {"<>":"input","type":"text","class":"form-control","id":"id","name":"id","placeholder":"Agent Id","html":""}
 	      ]},
 	    {"<>":"div","class":"form-group","html":[
-	        {"<>":"label","class":"control-label","for":"firstName","html":"First Name"},
+	        {"<>":"label","class":"control-label","for":"firstName","html":" Name"},
 	        {"<>":"input","type":"text","class":"form-control","id":"firstName","name":"firstName","placeholder":"First Name","html":""}
 	      ]},
 	    {"<>":"div","class":"form-group","html":[
