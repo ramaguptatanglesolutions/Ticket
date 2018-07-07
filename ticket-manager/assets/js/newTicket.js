@@ -1,6 +1,7 @@
 $("#new_ticket").click(function(){
 console.log("clicked",base_url);
 $("#div1").empty();
+$("#new_ticket").addClass('disabled');
 $.ajax({
 	
 	url:base_url+"departments/search",
@@ -49,8 +50,8 @@ $.ajax({
 	                    	  ]
 	                    ]},
 	                    {"<>":"div","class":"form-group","html":[
-	                        {"<>":"label","for":"exampleFormControlTextarea2","html":"Details about the issue "},
-	                        {"<>":"textarea","class":"form-control rounded-0","id":"exampleFormControlTextarea2","rows":"3","name":"text","html":""},
+	                        {"<>":"label","for":"Textarea","html":"Details about the issue "},
+	                        {"<>":"textarea","class":"form-control rounded-0","id":"Textarea","maxlength":"30","rows":"3","name":"text","html":""},
 	                        {"<>":"font","html":""}
 	                      ]},
 	                      {"<>":"div","align":"center","style":"padding: 10px;","html":[
@@ -62,40 +63,100 @@ $.ajax({
 
 
 $('#div1').json2html({},transform); 
+$("#new_ticket").removeClass('disabled');
 
+		$("#addTicketform").validate({
+			rules: {
+			      
+				client_id: {
+			        required: true,
+			      },
+			      service:{
+					required: true,
+				},
+			      subject:{
+			    	  required: true,
+			      },
+			      text:{
+			    	  required:true,
+			    	  minlength:true,
+			      }
+			      
+			 },
+			 messages: {
+			      // about
+				 client_id: {
+			        required: '<span class="field-error">Please Enter Client Id</span>',
+			      },
+			      service:{
+			    	  required:'<span class="field-error">Please Enter Service</span>'
+			      },
+			      subject: {
+				        required: '<span class="field-error">Please Enter Subject</span>',
+				      },
+				      text: {
+					        required: '<span class="field-error">Please Enter Description</span>',
+					      }
+			 },
+			      
+			ignore: "",
+		    errorClass: 'has-error',
+		    validClass: 'has-success',
+		   highlight: function (element, errorClass, validClass) {
+		      $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
+		      $(element).closest('.form-group').find('span.glyphicon').remove();
+		    },
+		    unhighlight: function (element, errorClass, validClass) {
+		      $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
+		      $(element).closest('.form-group').find('span.glyphicon').remove();
+		    },
+		    //focusInvalid: false,
+			submitHandler: function(form) {
+				 // alert("sdfsfdsfdsf");
+				  $("button[type=submit]").attr("disabled", true).html('<i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Saving...');
 
-	$("#addTicketform").submit(function(e) {
-		e.preventDefault();
-		console.log("inside");
-	    var url = base_url+"tickets/new"; // the script where you handle the form input.
+					console.log("addTicketform");
+					$("#addTicketform").submit(function(e) {
+						e.preventDefault();
+						console.log("inside");
+					    var url = base_url+"tickets/new"; // the script where you handle the form input.
 
-	    $.ajax({
-	    	   async: false,
-	           type: "POST",
-	           url: url,
-	           dataType:"json",
-	           data: $("#addTicketform").serialize(), // serializes the form's elements.
-	           success: function(data)
-	           {
-	        	   console.log("inside success");
-	        	   console.log(data);
-	        	   if(data.status=="failed"){
-//	        		   $("#").html("").html(data.response.department);
-	        		   alert("error");
-	        	   }else if(data.status=="success"){
-	        		    swal("Saved!", "Ticket added successfully.", "success");
-	        		    $("#queued_ticket").trigger("click");
-	        	   }
-	        	   
-	           }
-	         });	
-});
+					    $.ajax({
+					    	   async: false,
+					           type: "POST",
+					           url: url,
+					           dataType:"json",
+					           data: $("#addTicketform").serialize(), // serializes the form's elements.
+					           success: function(data)
+					           {
+					        	   console.log("inside success");
+					        	   console.log(data);
+					        	   if(data.status=="failed"){
+//					        		   $("#").html("").html(data.response.department);
+					        		   alert("error");
+					        	   }else if(data.status=="success"){
+					        		    swal("Saved!", "Ticket added successfully.", "success");
+					        		    $("#queued_ticket").trigger("click");
+					        	   }
+					        	   
+					           }
+					         });
 
+				    
+			
+			  });
+		
+		    
+	    
+	    
+	    
+	    
+},
 
-
-	},
-});
 	
+});
+	},
+});		
 	
 });	
 	

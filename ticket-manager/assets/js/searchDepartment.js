@@ -1,6 +1,8 @@
+$(document).ready(function(){
 $("#search_department").click(function(){
 console.log("clicked",base_url);
 $("#div1").empty();
+$("#search_department").addClass('disabled');
 $.ajax({
 	url:base_url+"departments/search", 
 	type:"GET",
@@ -8,7 +10,8 @@ $.ajax({
 	success: function(result){
 		console.log("inside success");
 		console.log(result);
-		var transform ={"<>":"div","class":"col-md-9","html":[
+/*=============================================Search Department Transform Starts==========================================================*/		
+		var transform ={"<>":"div","class":"col-md-10","html":[
 			{"<>":"button","onclick":function(e){$("#add_department").trigger("click");},"class":"btn btn-primary","value":"New Department","html":"New Department"},
 			  {"<>":"span","html":"&nbsp"},
 			{"<>":"button","type":"button","onclick":function(){return deleteDepartment();},"class":"btn btn-danger","id":"delete","html":"Delete"},
@@ -18,7 +21,7 @@ $.ajax({
 			{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
 			
 					{"<>":"br"},
-			    {"<>":"table","class":"table","id":"table","html":[
+			    {"<>":"table","class":"table table-bordered","id":"table","html":[
 			        {"<>":"thead","html":[
 			            {"<>":"tr","html":[
 			            	{"<>":"th","html":"Select"},
@@ -33,24 +36,45 @@ $.ajax({
 				  ]}
 			
 			  ]}; 
-		
+	
 		$('#div1').json2html({},transform);
 
 		var transform1 = {'<>':'tr','html':[
 			  {'<>':'td','html':[
-				  {"<>":"input", "type":"checkbox","id":"${id}","name":"check_department${id}"}
+				  {"<>":"input", "type":"checkbox","onchange":function(){changeButton();},"id":"${id}","name":"check_department${id}"}
 	            ]},
             	{"<>":"td","html":function(result,index){return (' '+(index+1));}},
             {'<>':'td','html':'${name}'},
             {'<>':'td','html':'${status}'},
            
         ]};
-		
+		changeButton();
 		$('#department_data').json2html(result.department,transform1);
-},
-});
-});
+		$("#search_department").removeClass('disabled');
+		
 
+},
+error:function(error){
+	console.log(error,"inside error");
+		}
+	});
+/*====================================================Change Button Function======================================================================*/ 
+function changeButton(){
+	var checked = [];
+    $(":checkbox").map(function() {
+        this.checked ? checked.push(this.id) : '';
+    });
+	var len = checked.length;
+	//alert(len);
+	if(len==0){
+		$("#delete,#block").prop( "disabled", true );
+	}else{
+		$("#delete,#block").prop( "disabled", false );	
+	}
+}
+});
+});
+/*=========================================Search Department Transform End=====================================================================*/
 /*=========================================Delete Department Function===========================================================================*/
 
 
@@ -84,6 +108,7 @@ function deleteDepartment(){
 		              {'<>':'td','html':'${status}'},
 		            
 		          ]}];
+		    		
 		  		$('#department_data').json2html(newresult.department,transform1);
 	    		}
 	    	}, 
@@ -124,6 +149,8 @@ function blockDepartment(){
 	    	}
 	   });
 }
+	    
 }
+
 
 /*==========================================================================================================================================*/

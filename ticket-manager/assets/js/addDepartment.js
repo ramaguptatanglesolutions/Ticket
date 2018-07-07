@@ -1,6 +1,7 @@
 $("#add_department").click(function(){
-console.log("clicked",base_url);
+console.log("clicked",base_url);2
 $("#div1").empty();
+$("#add_department").addClass('disabled');
 $.ajax({
 	url:base_url+"tickets/queued", 
 	type:"POST",
@@ -32,6 +33,7 @@ var transform= {"<>":"form","id":"departmentForm","method":"post","html":[
 
 
 $('#div1').json2html({},transform);
+$("#add_department").removeClass('disabled');
 	},
 	error: function(error){
 		console.log(error,"inside error");

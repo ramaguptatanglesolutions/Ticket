@@ -157,3 +157,6 @@
 #footer a {
     color: inherit;
 }
+.side-menu .btn{
+	text-align: inherit;
+}

@@ -22,6 +22,7 @@ $route['tickets/filter']='Ticket_Controller/filter';
 $route['tickets/self']='Ticket_Controller/selfAssigned';
 $route['tickets/resolved/tickets']= 'Ticket_Controller/resolve';
 $route['tickets/transfer']='Ticket_Controller/transferAgent';
+$route['tickets/welcome']='Ticket_Controller/landingPage';
 
 
 $route['agents/new'] = 'Agent_Controller/create';

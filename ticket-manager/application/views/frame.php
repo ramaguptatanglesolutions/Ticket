@@ -20,7 +20,16 @@
 <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 
+<style>
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
 
+</style>
 <body class="nav-md">
 	<div id="left_bar">
 		<div id="logo" align="center">
@@ -48,32 +57,28 @@
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 						<?php if($role!=3) {?>
-							<li><a id="queued_ticket">Queued</a></li>
-							<li><a id="self_assigned">Self Assigned</a></li>
+							<li><a id="queued_ticket" class="btn">Queued</a></li>
+							<li><a id="self_assigned" class="btn">Self Assigned</a></li>
 							<?php }?>
 							
-							<li><a id="open_ticket">Open</a></li>
-							<li><a id="resolved_ticket">Resolved</a></li>
-							<li><a id="new_ticket">Create New
-									Ticket</a></li>
+							<li><a id="open_ticket" class="btn">Open</a></li>
+							<li><a id="resolved_ticket" class="btn">Resolved</a></li>
+							<li><a id="new_ticket" class="btn">Create NewTicket</a></li>
 
 						</ul></li>
 						<?php if($role!=3){?>
 					<li><a><i class="fa fa-user-secret"></i> Agents <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a id="add_agent">Add New Agent</a></li>
-							<li><a id="search_agent">Search Agents</a></li>
+							<li><a id="add_agent" class="btn">Add New Agent</a></li>
+							<li><a id="search_agent" class="btn">List Agents</a></li>
 						</ul></li>
 						<?php }?>
 						<?php if($role!=3 && $role!=2){?>
-					<li><a><i class="fa fa-university"></i> Departments <span
-							class="fa fa-chevron-down"></span></a>
+					<li><a><i class="fa fa-university"></i> Departments <span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a id="add_department">Create New
-									Department</a></li>
-							<li><a id="search_department">Search
-									Departments</a></li>
+							<li><a id="add_department" class="btn">Create New Department</a></li>
+							<li><a id="search_department" class="btn">List Departments</a></li>
 						</ul></li>
 						<?php }?>
 				</ul>
@@ -117,6 +122,7 @@ var base_url='<?php echo base_url();?>';
 <!-- Search Agent Script-->
 <script src="<?php  echo base_url();?>assets/js/searchAgent.js"></script> 
 <!-- Self Assigned Script -->
+<script src="<?php  echo base_url();?>assets/js/selfAssigned.js"></script>
 <!-- Resolved Ticket Script -->
 <script src="<?php  echo base_url();?>assets/js/resolvedTicket.js"></script>
 <!-- Add Agent -->
@@ -131,7 +137,11 @@ var base_url='<?php echo base_url();?>';
 <script src="<?php  echo base_url();?>assets/js/queuedTicket.js"></script>
 <!-- Add Department -->
 <script src="<?php  echo base_url();?>assets/js/addDepartment.js"></script>
+
 <!-- ----------------------------Sweet Alert Script------------------------------------ -->
+
 <script src="<?php  echo base_url();?>assets/js/sweetalert.min.js"></script>
 
+<!-- ---------------------------------Jquery Form_Validation CDN Script--------------------------------------------------------------- -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 </html>

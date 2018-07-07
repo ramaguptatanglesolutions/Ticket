@@ -1,6 +1,7 @@
 $("#search_agent").click(function(){
 console.log("clicked",base_url);
 $("#div1").empty();
+$("#search_agent").addClass('disabled');
 $.ajax({
   url:base_url+"agents/search", 
   type:"POST",
@@ -8,8 +9,8 @@ $.ajax({
 	success: function(result){
 		console.log("inside success");
 		console.log(result);
-/*===============================Search Agent ============================================*/
-		var transform ={"<>":"div","class":"col-md-9","html":[
+/*==================================================Search Agent ==================================================*/
+		var transform ={"<>":"div","class":"col-md-10","html":[
 		{"<>":"div","class":"table-responsive","style":"overflow-x: inherit;","html":[
 		{"<>":"button","onclick":function(e){$("#add_agent").trigger("click");},"class":"btn btn-primary","value":"New Agent","html":"New Agent"},
 		  {"<>":"span","html":"&nbsp"},  
@@ -18,7 +19,7 @@ $.ajax({
 		  {"<>":"span","html":"&nbsp"},
 			  {"<>":"button","onclick":function(){return blockAgent();},"type":"button", "class":"btn btn-danger","id":"block","html":"Block"},
 				{"<>":"br"},
-		    {"<>":"table","class":"table","id":"table","html":[
+		    {"<>":"table","class":"table table-bordered","id":"table","html":[
 		        {"<>":"thead","html":[
 		            {"<>":"tr","html":[
 		            	{"<>":"th","html":"Select"},
@@ -53,9 +54,8 @@ $.ajax({
 		$('#department_data').json2html(result.agents,transform1);
 
 /*===============================================Filter Form===========================================*/
-		var transformFilter={"<>":"div","class":"row","id":"filterDiv","html":[
-		    
-		    	{"<>":"div","class":"col-xs-3","id":"div2","html":[
+		var transformFilter={"<>":"div","id":"right_bar","html":[
+		    	
 		    	{"<>":"form","method":"post","id":"agentFilter","html":[
 		    	    {"<>":"h3","style":"margin-top:0px","html":"Filters"},
 		    	    {"<>":"hr","style":"margin-top:0px","html":""},
@@ -119,14 +119,14 @@ $.ajax({
 		    	            ]},
  {"<>":"button","type":"submit","name":"submit","value":"submit","class":"btn btn-primary pull-right","html":"Apply Filter"},
 		      ]}
-		    	]}
-		    	
+		    
 		    ]};
 		
 		
 		$('#div1').json2html({},transformFilter);
-		
-/*==============================================Filter Function======================================*/		
+		$("#search_agent").removeClass('disabled');
+
+/*==============================================Filter Function=============================================*/		
 	
 			
 			$("#agentFilter").submit(function(e) {
@@ -147,9 +147,8 @@ $.ajax({
 			    		
 			    			var transform1 = {'<>':'tr','html':[
 			    				  {'<>':'td','html':[
-			    		            	{"<>":"input", "type":"checkbox","id":"${agent_id}","name":"check_agent${agent_id}"},
-			    		            	{"<>":"span","html":function(result,index){return (' '+(index+1));}},
-			    		            ]},
+			    		            	{"<>":"input", "type":"checkbox","id":"${agent_id}","name":"check_agent${agent_id}"},]},
+			    		        	{"<>":"td","html":function(result,index){return (' '+(index+1));}},
 			    	            {'<>':'td','class':"text-style",'html':'${first_name}&nbsp;${last_name}'},
 			    	            {'<>':'td','html':'${department}'},
 			    	            {'<>':'td','html':'${role}'},
@@ -171,7 +170,6 @@ $.ajax({
 			    	        ]};
 			    	 	
 			    			$('#department_data').json2html(result,transform1);
-			        	   
 			           }
 			         }
 			    });
@@ -179,14 +177,14 @@ $.ajax({
 			
 			
 			
-		
+			
 	},
 		
 error:function(error){
 	console.log(error,"inside error");
 		}
 	});
-
+/*=====================================================Change Button Function=================================================*/
 function changeButton(){
 	var checked = [];
     $(":checkbox").map(function() {
@@ -206,7 +204,7 @@ function changeButton(){
 });
 
 
-/*=============================Delete Agent Function===================================*/
+/*=============================Delete Agent Function==========================================================*/
 
 function deleteAgent(){
 	 var checked = [];
@@ -232,7 +230,7 @@ function deleteAgent(){
 	   });
 }
 
-/*===============================Block Agent====================================================*/
+/*===============================Block Agent==================================================================*/
 function blockAgent(){
 	 var checked = [];
 	    $(":checkbox").map(function() {

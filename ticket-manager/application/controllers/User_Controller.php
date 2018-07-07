@@ -31,7 +31,7 @@
     		        $this->session->set_userdata('department', $result->data->department);
     		        $this->session->set_userdata('department_id', $result->data->department_id);
     		        $this->session->set_userdata('role',$result->data->role);
-    		        redirect("tickets/opened");
+    		        redirect("tickets/welcome");
     		    }
     		    else 
     		    {

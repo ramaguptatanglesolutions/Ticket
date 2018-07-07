@@ -213,8 +213,15 @@ class Ticket_Controller extends Session_Controller
         
         $res1 = $this->callService("Agent_Service", "search", NULL, Rest_Client::POST);
         $res1 = json_decode($res1, true);
+        $data_final=array(
+            "ticket"=>$result,
+            "departments"=>$res,
+            "agent"=>$res1
+        );
         
-         if ($result != NULL && $res['department'] != NULL) {
+       print_r(json_encode($data_final));
+        
+       /*   if ($result != NULL && $res['department'] != NULL) {
             $this->load->view('frame', array(
                 'title' => 'Tickets /Search',
                 'page' => 'test',
@@ -231,7 +238,7 @@ class Ticket_Controller extends Session_Controller
                 'status' => 3
             
             ));
-        } 
+        }  */ 
     }
 
     public function resolved()
@@ -466,7 +473,14 @@ class Ticket_Controller extends Session_Controller
         $result = json_decode($result, true);
         $res = $this->callService('Department_Service', 'search', NULL, Rest_Client::GET);
         $res = json_decode($res, TRUE);
-        if ($result != NULL && $res['department'] != NULL) {
+        $data_final=array(
+            "ticket"=>$result,
+            "departments"=>$res,
+          
+        );
+        
+        print_r(json_encode($data_final));
+     /*    if ($result != NULL && $res['department'] != NULL) {
             $this->load->view('frame', array(
                 'title' => 'Tickets / Search',
                 'page' => 'tickets',
@@ -480,7 +494,7 @@ class Ticket_Controller extends Session_Controller
                 'page' => 'ticket_open',
                 'status' => 3
             ));
-        }
+        } */
     }
 
     public function resolve()
@@ -564,6 +578,13 @@ class Ticket_Controller extends Session_Controller
                 }
             }
         }
+    }
+    public function landingPage(){
+        $this->load->view('frame', array(
+            'title' => 'FreelancingGig Support',
+            'page' => 'landingPage',
+            
+        ));
     }
 }
 

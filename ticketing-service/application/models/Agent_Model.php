@@ -79,6 +79,7 @@
                 
                 $this->db->select("agent.id, agent_id,first_name, last_name, department.name as department, role.name as role,case when agent.status = 0 then 'Active' else 'Block' end as status, rating",FALSE);
                 $this->db->from("agent");
+                $this->db->where("role!=1");
                 $this->db->join("personal_info","agent.id=personal_info.id");
                 $this->db->join("department","department.id=agent.department");
                 $this->db->join("role","role.id=agent.role");
